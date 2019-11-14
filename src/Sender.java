@@ -9,4 +9,10 @@ import java.net.DatagramSocket;
 
 public class Sender extends NetworkUtils {
 
+
+    public static void main(String[] args) {
+        Sender sender = new Sender();
+        ObjectCreator creator = new ObjectCreator();
+        Object sendObj = creator.objectCreate();
+    }
 }
