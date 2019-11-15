@@ -1,6 +1,11 @@
 public class ObjectReferenceObject {
+    private Object referenceObj;
 
     public ObjectReferenceObject(Object o) {
-        ReferencedObject refObj = new ReferencedObject(o);
+        referenceObj = o;
+    }
+
+    public ObjectReferenceObject() {
+
     }
 }

@@ -1,3 +1,4 @@
+import java.lang.reflect.Parameter;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -7,7 +8,7 @@ public class ObjectCreator {
     private Object sendObj = null;
 
     private Object createSimpleObj() throws InputMismatchException {
-        Scanner s = new Scanner(System.in);
+        Scanner s = new Scanner(System.in); // Scanners are re initialized in each method to ensure clear buffer
 
         int i;
         String str;
@@ -41,7 +42,7 @@ public class ObjectCreator {
         s.nextLine();
 
         if (arrType < 1 || arrType > 3) {
-            System.out.println("Out of range");
+            System.out.println("Number out of range");
             System.exit(-1);
         }
 
@@ -62,6 +63,10 @@ public class ObjectCreator {
             else if (arrType == 3) {
                 arr[i] = s.nextBoolean();
                 s.nextLine();
+            }
+            else {
+                System.out.println("Number out of range");
+                System.exit(-1);
             }
         }
 
@@ -86,19 +91,79 @@ public class ObjectCreator {
         return null;
     }
 
-    private Object createObjRefObj() {
+    private Object createObjRefObj() throws InputMismatchException {
+        Scanner s = new Scanner(System.in);
+        ObjectReferenceObject refObj;
+        int input;
 
+        System.out.println("Pick an object for the object to reference: ");
+        System.out.println("1. Simple object with primitive fields");
+        System.out.println("2. Simple object with an array of primitives");
+        System.out.println("3. This object, creating a circular reference");
+
+        input = s.nextInt();
+        s.nextLine();
+
+        if (input == 1) {
+            refObj = new ObjectReferenceObject(createSimpleObj());
+            return refObj;
+        } else if (input == 2) {
+            refObj = new ObjectReferenceObject(createArrayOfObjsObj());
+            return refObj;
+        } else if (input == 3) {
+            refObj = new ObjectReferenceObject(new ObjectReferenceObject());
+            return refObj;
+        } else {
+            System.out.println("Number out of range");
+            System.exit(-1);
+        }
         return null;
+    }
+
+    private Object[] createObjectArray() {
+        Scanner s = new Scanner(System.in);
+        Object[] objArray = new Object[0];
+        int arrLength;
+        int selection;
+
+        System.out.println("Enter the length of the array: ");
+        arrLength = s.nextInt();
+        s.nextLine();
+
+        System.out.println("Enter the type of objects in the array: ");
+        System.out.println("1. Simple objects with primitive fields");
+        System.out.println("2. Simple objects with an array of primitives");
+
+        selection = s.nextInt();
+        s.nextLine();
+
+        if (selection == 1) {
+            objArray = new SimpleObject[arrLength];
+            for (int i = 0; i < arrLength; i++) {
+                objArray[i] = createSimpleObj();
+            }
+        }
+        else if (selection == 2) {
+            objArray = new ArrayOfPrimsObject[arrLength];
+            for (int i = 0; i < arrLength; i++) {
+                objArray[i] = createPrimArrayObj();
+            }
+        }
+        else {
+            System.out.println("Number out of range");
+            System.exit(-1);
+        }
+        return objArray;
     }
 
     private Object createArrayOfObjsObj() {
-
-        return null;
+        Object[] objArray = createObjectArray();
+        return new ArrayOfObjsObject(objArray);
     }
 
     private Object createCollectionObj() {
-
-        return null;
+        Object[] objArray = createObjectArray();
+        return new CollectionObject(objArray);
     }
 
 
