@@ -1,8 +1,5 @@
 import java.net.*;
-import java.util.*;
-import java.nio.file.*;
 import java.io.*;
-import java.net.DatagramSocket;
 import javax.xml.parsers.*;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.*;
@@ -32,6 +29,20 @@ public class Sender {
         out.close();
         in.close();
         socket.close();
+
+        printFile();
+    }
+
+    public void printFile() throws IOException {
+        System.out.println("DOM file sent:\n");
+        BufferedReader in = new BufferedReader(new FileReader(filename));
+        String line = in.readLine();
+        while(line != null)
+        {
+            System.out.println(line);
+            line = in.readLine();
+        }
+        in.close();
     }
 
 

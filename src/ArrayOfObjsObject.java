@@ -4,5 +4,4 @@ public class ArrayOfObjsObject {
     public ArrayOfObjsObject(Object[] objs) {
         objects = objs;
     }
-
 }

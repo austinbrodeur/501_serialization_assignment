@@ -73,31 +73,21 @@ public class Receiver extends Thread {
     }
 
 
-    public Object deSerialize(String filename) throws IOException, ParserConfigurationException, SAXException {
+    public Object deSerialize(String filename) throws IOException, SAXException, ParserConfigurationException {
         Object outObj = null;
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
         Document document = documentBuilder.parse(filename);
 
-        document.getDocumentElement().normalize();
 
-        System.out.println("Root element: " + document.getDocumentElement().getNodeName());
-        NodeList nList = document.getElementsByTagName("object");
-
-        for (int i = 0; i < nList.getLength(); i++) {
-            Node nNode = nList.item(i);
-            String name = nNode.getAttributes().getNamedItem("class").getNodeValue();
-        }
 
         return outObj;
     }
 
 
-
-    public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
+    public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
         Receiver receiver = new Receiver();
         Inspector inspector = new Inspector();
-        Object obj;
         receiver.receiveFile(9876);
         inspector.inspect(receiver.deSerialize(receiver.getFilename()), false);
     }
