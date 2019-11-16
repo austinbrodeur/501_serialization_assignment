@@ -87,7 +87,6 @@ public class Receiver extends Thread {
         for (int i = 0; i < nList.getLength(); i++) {
             Node nNode = nList.item(i);
             String name = nNode.getAttributes().getNamedItem("class").getNodeValue();
-
         }
 
         return outObj;
@@ -95,10 +94,11 @@ public class Receiver extends Thread {
 
 
 
-
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
         Receiver receiver = new Receiver();
+        Inspector inspector = new Inspector();
+        Object obj;
         receiver.receiveFile(9876);
-        receiver.deSerialize(receiver.getFilename());
+        inspector.inspect(receiver.deSerialize(receiver.getFilename()), false);
     }
 }
