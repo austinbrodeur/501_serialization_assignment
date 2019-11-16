@@ -5,14 +5,14 @@ import org.w3c.dom.Node;
 import java.util.HashMap;
 
 public class ArrayOfPrimsObject {
-    private String[] stringArray;
+    private int[] intArray;
 
-    public ArrayOfPrimsObject(String[] sArr) { stringArray = sArr; }
+    public ArrayOfPrimsObject(int[] sArr) { intArray = sArr; }
 
-    public Node toElements(Document document) {
+    public Node toElements(Document document, int id) {
         HashMap<String, String> hm = new HashMap<>();
-        hm.put(this.toString(), "0");
-        hm.put(stringArray.toString(), "1");
+        hm.put(this.toString(), String.valueOf(id));
+        hm.put(intArray.toString(), String.valueOf(id+1));
 
         Element object_element = document.createElement("object");
         object_element.setAttribute("class", this.getClass().getName());
@@ -23,16 +23,16 @@ public class ArrayOfPrimsObject {
         field_element.setAttribute("declaringclass", "ArrayOfPrimsObject");
 
         Element reference_element = document.createElement("reference");
-        reference_element.setTextContent(hm.get(stringArray.toString()));
+        reference_element.setTextContent(hm.get(intArray.toString()));
 
         Element array_object_element = document.createElement("object");
-        array_object_element.setAttribute("class", stringArray.getClass().getName());
-        array_object_element.setAttribute("id", hm.get(stringArray.toString()));
-        array_object_element.setAttribute("length", String.valueOf(stringArray.length));
+        array_object_element.setAttribute("class", intArray.getClass().getName());
+        array_object_element.setAttribute("id", hm.get(intArray.toString()));
+        array_object_element.setAttribute("length", String.valueOf(intArray.length));
 
-        for (String s : stringArray) {
+        for (int i : intArray) {
             Element array_value_object = document.createElement("value");
-            array_value_object.setTextContent(s);
+            array_value_object.setTextContent(String.valueOf(i));
             array_object_element.appendChild(array_value_object);
         }
 

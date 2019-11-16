@@ -1,11 +1,25 @@
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.net.*;
 import java.util.*;
-import java.nio.file.*;
-import java.net.DatagramSocket;
+
 
 // Network code modified from https://stackoverflow.com/questions/9520911/java-sending-and-receiving-file-byte-over-sockets
 public class Receiver extends Thread {
+
+    private final String filename = "received_serialized_file.xml";
+
+
+    public String getFilename() {
+        return filename;
+    }
+
 
     public void receiveFile(int port) {
         ServerSocket serverSocket = null;
@@ -33,7 +47,7 @@ public class Receiver extends Thread {
         }
 
         try {
-            out = new FileOutputStream("received_serialized_file.xml");
+            out = new FileOutputStream(filename);
         } catch (FileNotFoundException e) {
             System.out.println("File not found. ");
         }
@@ -59,9 +73,32 @@ public class Receiver extends Thread {
     }
 
 
-    public static void main(String[] args) throws IOException {
-        Receiver receiver = new Receiver();
-        receiver.receiveFile(9876);
+    public Object deSerialize(String filename) throws IOException, ParserConfigurationException, SAXException {
+        Object outObj = null;
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        Document document = documentBuilder.parse(filename);
+
+        document.getDocumentElement().normalize();
+
+        System.out.println("Root element: " + document.getDocumentElement().getNodeName());
+        NodeList nList = document.getElementsByTagName("object");
+
+        for (int i = 0; i < nList.getLength(); i++) {
+            Node nNode = nList.item(i);
+            String name = nNode.getAttributes().getNamedItem("class").getNodeValue();
+
+        }
+
+        return outObj;
     }
 
+
+
+
+    public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
+        Receiver receiver = new Receiver();
+        receiver.receiveFile(9876);
+        receiver.deSerialize(receiver.getFilename());
+    }
 }

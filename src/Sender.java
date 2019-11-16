@@ -45,15 +45,15 @@ public class Sender {
         document.appendChild(root);
 
         if (obj instanceof SimpleObject) {
-            root.appendChild(((SimpleObject) obj).toElements(document));
+            root.appendChild(((SimpleObject) obj).toElements(document, 0));
         }
-        if (obj instanceof ArrayOfPrimsObject) {
-            root.appendChild(((ArrayOfPrimsObject) obj).toElements(document));
+        else if (obj instanceof ArrayOfPrimsObject) {
+            root.appendChild(((ArrayOfPrimsObject) obj).toElements(document, 0));
+        }
+        else if (obj instanceof ObjectReferenceObject) {
+            root.appendChild(((ObjectReferenceObject) obj).toElements(document, 0));
         }
 
-
-
-        // Builds file
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -62,8 +62,6 @@ public class Sender {
         StreamResult streamResult = new StreamResult(new File(filename));
         transformer.transform(domSource, streamResult);
     }
-
-
 
 
     public static void main(String[] args) throws Exception {

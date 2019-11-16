@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -8,40 +7,36 @@ public class ObjectCreator {
         Scanner s = new Scanner(System.in); // Scanners are re initialized in each method to ensure clear buffer
 
         int i;
-        String str;
         boolean b;
 
         System.out.println("Enter an integer: ");
         i = s.nextInt();
         s.nextLine();
 
-        System.out.println("Enter a string: ");
-        str = s.nextLine();
-
         System.out.println("Enter a boolean: ");
         b = s.nextBoolean();
         s.nextLine();
 
-        return(new SimpleObject(i, str, b));
+        return(new SimpleObject(i, b));
     }
 
     private Object createPrimArrayObj() throws InputMismatchException {
         Scanner s = new Scanner(System.in);
-        Object[] arr;
+        int[] arr;
         int arrLength;
 
         System.out.println("Enter the length of the array: ");
         arrLength = s.nextInt();
         s.nextLine();
-        arr = new Object[arrLength];
+        arr = new int[arrLength];
 
         System.out.println("Enter elements to put in the array");
         for (int i = 0; i < arrLength; i++) {
             System.out.println("Enter element " + i);
-            arr[i] = s.nextLine();
+            arr[i] = s.nextInt();
+            s.nextLine();
         }
-        String[] sArr = Arrays.copyOf(arr, arr.length, String[].class);
-        return(new ArrayOfPrimsObject(sArr));
+        return(new ArrayOfPrimsObject(arr));
     }
 
     private Object createObjRefObj() throws InputMismatchException {
@@ -61,7 +56,7 @@ public class ObjectCreator {
             refObj = new ObjectReferenceObject(createSimpleObj());
             return refObj;
         } else if (input == 2) {
-            refObj = new ObjectReferenceObject(createArrayOfObjsObj());
+            refObj = new ObjectReferenceObject(createPrimArrayObj());
             return refObj;
         } else if (input == 3) {
             refObj = new ObjectReferenceObject(new ObjectReferenceObject());
