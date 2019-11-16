@@ -1,11 +1,8 @@
-import java.lang.reflect.Parameter;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ObjectCreator {
-
-    private Object sendObj = null;
 
     private Object createSimpleObj() throws InputMismatchException {
         Scanner s = new Scanner(System.in); // Scanners are re initialized in each method to ensure clear buffer
