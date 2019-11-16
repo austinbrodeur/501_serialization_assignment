@@ -28,20 +28,7 @@ public class ObjectCreator {
     private Object createPrimArrayObj() throws InputMismatchException {
         Scanner s = new Scanner(System.in);
         Object[] arr;
-        int arrType;
         int arrLength;
-
-        System.out.println("Select the type of the primitive array: ");
-        System.out.println("1. String");
-        System.out.println("2. int");
-        System.out.println("3. boolean");
-        arrType = s.nextInt();
-        s.nextLine();
-
-        if (arrType < 1 || arrType > 3) {
-            System.out.println("Number out of range");
-            System.exit(-1);
-        }
 
         System.out.println("Enter the length of the array: ");
         arrLength = s.nextInt();
@@ -50,42 +37,11 @@ public class ObjectCreator {
 
         System.out.println("Enter elements to put in the array");
         for (int i = 0; i < arrLength; i++) {
-            if (arrType == 1) {
-                arr[i] = s.nextLine();
-            }
-            else if (arrType == 2) {
-                arr[i] = s.nextInt();
-                s.nextLine();
-            }
-            else if (arrType == 3) {
-                arr[i] = s.nextBoolean();
-                s.nextLine();
-            }
-            else {
-                System.out.println("Number out of range");
-                System.exit(-1);
-            }
+            System.out.println("Enter element " + i);
+            arr[i] = s.nextLine();
         }
-
-        if (arrType == 1) {
-            String[] sArr = Arrays.copyOf(arr, arr.length, String[].class);
-            return(new ArrayOfPrimsObject(sArr));
-        }
-        else if (arrType == 2) {
-            int[] iArr = new int[arrLength];
-            for (int i = 0; i < arrLength; i++) {
-                iArr[i] = (int) arr[i];
-            }
-            return(iArr);
-        }
-        else if (arrType == 3) {
-            boolean[] bArr = new boolean[arrLength];
-            for (int i = 0; i < arrLength; i++) {
-                bArr[i] = (boolean) arr[i];
-            }
-            return(bArr);
-        }
-        return null;
+        String[] sArr = Arrays.copyOf(arr, arr.length, String[].class);
+        return(new ArrayOfPrimsObject(sArr));
     }
 
     private Object createObjRefObj() throws InputMismatchException {

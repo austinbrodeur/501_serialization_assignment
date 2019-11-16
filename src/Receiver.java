@@ -58,6 +58,7 @@ public class Receiver extends Thread {
         }
     }
 
+
     public static void main(String[] args) throws IOException {
         Receiver receiver = new Receiver();
         receiver.receiveFile(9876);

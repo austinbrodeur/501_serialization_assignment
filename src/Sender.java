@@ -47,6 +47,9 @@ public class Sender {
         if (obj instanceof SimpleObject) {
             root.appendChild(((SimpleObject) obj).toElements(document));
         }
+        if (obj instanceof ArrayOfPrimsObject) {
+            root.appendChild(((ArrayOfPrimsObject) obj).toElements(document));
+        }
 
 
 

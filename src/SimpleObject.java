@@ -1,8 +1,5 @@
 import org.w3c.dom.*;
-
-import java.util.ArrayList;
-import java.util.IdentityHashMap;
-import java.util.jar.Attributes;
+import java.util.HashMap;
 
 public class SimpleObject {
     private int a;
@@ -16,11 +13,14 @@ public class SimpleObject {
     }
 
     public Node toElements(Document document) {
+        HashMap<String, String> hm = new HashMap<>();
+        hm.put(this.toString(), "0");
+
         Element object_element = document.createElement("object");
         object_element.setAttribute("class", this.getClass().getName());
-        object_element.setAttribute("id", "0"); // No map used because no objects can be referenced
+        object_element.setAttribute("id", hm.get(this.toString()));
 
-        Element a_field_element = document.createElement("field");
+        Element a_field_element = document.createElement("field"); // Fields names are hardcoded as their names don't change
         a_field_element.setAttribute("name", "a");
         a_field_element.setAttribute("declaringclass", "SimpleObject");
 
